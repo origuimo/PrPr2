@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Regals</string>
+
+
+    <string name="LogIn">Log In</string>
+    <string name="Usuari">Usuari/Mail</string>
+    <string name="Contrasenya">Contrasenya</string>
+    <string name="error1">El mail no és vàlid.</string>
+
+</resources>
