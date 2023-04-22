@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/verd"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/loginlayout">
-
+    android:background="@color/verd">
     <TextView
-        android:id="@+id/text_login"
+        android:id="@+id/text_SignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
 
-        android:text="@string/LogIn"
+        android:text="@string/Register"
         android:textSize="40dp"
         android:textStyle="bold"
         android:textColor="@color/blauMari"
@@ -23,14 +20,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
-
     <TextView
-        android:id="@+id/text_Mail"
+        android:id="@+id/text_nom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
 
-        android:text="@string/Usuari"
+        android:text="@string/Nom"
         android:textColor="@color/blauMari"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -38,7 +34,35 @@
         android:layout_marginTop="60dp"
         android:layout_marginLeft="60dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_login"
+        app:layout_constraintTop_toBottomOf="@id/text_SignUp"
+        />
+    <EditText
+        android:id="@+id/Nom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_nom"
+        />
+    <TextView
+        android:id="@+id/text_correu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+
+        android:text="@string/Correu"
+        android:textColor="@color/blauMari"
+        android:textSize="20dp"
+        android:textStyle="bold"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Nom"
         />
     <EditText
         android:id="@+id/Mail"
@@ -50,7 +74,7 @@
         android:layout_marginRight="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_Mail"
+        app:layout_constraintTop_toBottomOf="@id/text_correu"
         />
     <TextView
         android:id="@+id/text_contrasenya"
@@ -80,46 +104,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_contrasenya"
         />
-    <Button
-        android:id="@+id/btnLogIn"
+    <TextView
+        android:id="@+id/text_contrasenya2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
 
-        android:text="@string/LogIn"
-        android:textStyle="bold"
+        android:text="@string/Contrasenya2"
         android:textColor="@color/blauMari"
-        android:backgroundTint="@color/turquesa"
+        android:textSize="20dp"
+        android:textStyle="bold"
 
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Contrasenya"
         />
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/Contrasenya2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
 
-        android:text="@string/text"
-        android:textSize="13dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_contrasenya2"
+        />
+    <Button
+        android:id="@+id/botoregister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        
+        android:text="@string/Register"
+        android:textStyle="bold"
+        android:textColor="@color/blauMari"
+        android:backgroundTint="@color/turquesa"
+        android:textSize="15dp"
 
-        android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@id/btnLogIn"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/Contrasenya2"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
-    <TextView
-        android:id="@+id/textsignup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:text="@string/Register"
-        android:textColor="@color/enllaç"
-        android:textSize="13dp"
-
-
-        app:layout_constraintTop_toBottomOf="@id/btnLogIn"
-        app:layout_constraintStart_toEndOf="@id/text"
-        />
 </androidx.constraintlayout.widget.ConstraintLayout>

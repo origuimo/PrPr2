@@ -2,9 +2,20 @@
     <string name="app_name">Regals</string>
 
 
+
+    <string name="Titol">GIFTGIVING</string>
     <string name="LogIn">Log In</string>
+    <string name="Register">Sign Up</string>
+
+
+
     <string name="Usuari">Usuari/Mail</string>
     <string name="Contrasenya">Contrasenya</string>
-    <string name="error1">El mail no és vàlid.</string>
+    <string name="Contrasenya2">Repeteix la Contrasenya</string>
+    <string name="Nom">Nom</string>
+    <string name="Correu">Correu electrònic</string>
+    <string name="text">Encara no tens compte?</string>
 
+
+    <string name="error1">El usuari i/o constrasenya no son vàlids.</string>
 </resources>
