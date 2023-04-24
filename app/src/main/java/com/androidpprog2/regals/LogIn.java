@@ -18,6 +18,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -45,9 +47,9 @@ public class LogIn extends AppCompatActivity {
                                     Snackbar.LENGTH_SHORT)
                             .show();
                 } else {
-                    try {
-                        URL url = new URL("https://balandrau.salle.url.edu/dpoo/shared/monsters");
-                        //URL url = new URL("https://monet.cat/posts/fromfeed2");
+                    
+                    /*try {
+                        URL url = new URL("https://balandrau.salle.url.edu/i3/socialgift/api/v1");
 
                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                         connection.setRequestMethod("GET");
@@ -61,11 +63,20 @@ public class LogIn extends AppCompatActivity {
                         InputStream response = connection.getInputStream();
                         String resposta = new BufferedReader(new InputStreamReader(response)).lines().collect(Collectors.joining());
                         // Procesar la respuesta aquí
-                        System.out.println(resposta);
+
+
+                        String token = "your_access_token_here";
+
+                        // Enviar una solicitud a la API utilizando ApiRequest
+                        String apiUrl = "https://balandrau.salle.url.edu/i3/socialgift/api/v1";
+                        Map<String, String> headers = new HashMap<>();
+                        headers.put("Authorization", "Bearer " + token);
+                        ApiRequest request = new ApiRequest(apiUrl, headers, LogIn.this, LogIn.this);
+                        request.sendRequest(LogIn.this);
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.out.println("Couldn’t connect to the remote server.\nReverting to local data.\n");
-                    }
+                    }*/
                 }
             }
         });

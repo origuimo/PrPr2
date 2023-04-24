@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/verd"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/feedlayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+
+        android:background="@color/blauMari"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    <ImageButton
+        android:id="@+id/regal_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+
+        android:src="@drawable/regal"
+        android:background="@android:color/transparent"
+
+        android:layout_marginStart="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+        <ImageButton
+            android:id="@+id/persones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+
+            android:src="@drawable/persones"
+            android:background="@android:color/transparent"
+
+            android:layout_marginStart="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/regal_img"
+            />
+        <ImageButton
+            android:id="@+id/casa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+
+            android:src="@drawable/casa"
+            android:background="@android:color/transparent"
+
+            android:layout_marginStart="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/persones"
+            />
+</LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
