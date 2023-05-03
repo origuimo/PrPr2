@@ -16,6 +16,52 @@
     <string name="Correu">Correu electrònic</string>
     <string name="text">Encara no tens compte?</string>
 
+    <string name="app_name">ProjecteAux</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_wishlist">Wishlist</string>
+    <string name="profile_prio">Prio</string>
+
+    <string name="Log_out">Are you sure you want to log out ?</string>
+    <string name="y">Yes</string>
+    <string name="n">No</string>
+
+    <string name="Reservation">Do you want to make a reservation for the gift Gift1 for Amic1 Birthday wishlist?</string>
+    <string name="r">Reserve</string>
+    <string name="c">Cancel</string>
+
+    <string name="newgift_title">New Gift</string>
+    <string name="newgift_name">Name</string>
+    <string name="newgift_description">Descritption</string>
+    <string name="newgift_link">Link</string>
+    <string name="newgift_price">Price</string>
+    <string name="newgift_priority">Priority</string>
+    <string name="newgift_category">Category</string>
+    <string name="newgift_wishlist">Wishlist</string>
+    <string name="newgift_loadimage">Load image</string>
+
+    <string name="edit">Edit</string>
+    <string name="create">Create</string>
+
+    <string name="editgift_title">Edit Gift</string>
+    <string name="editgift_save">Save</string>
+
+    <string name="gift_name">Name</string>
+    <string name="gift_prio">Prio</string>
+    <string name="gift_user">User</string>
+    <string name="gift_wishlist">Wishlist</string>
+
+    <string name="user_name">Name</string>
+    <string name="user_email">Email</string>
+    <string name="user_edit">Edit</string>
+
+    <string name="wishlist">Wishlist</string>
+    <string name="gifts">Gifts</string>
+
+    <string name="edit_profile">Edit Profile</string>
+    <string name="email_new">New email</string>
+    <string name="email_old">Old email</string>
+    <string name="password_new">New password</string>
+    <string name="password_old">Old password</string>
 
     <string name="error1">El usuari i/o constrasenya no son vàlids.</string>
 </resources>
