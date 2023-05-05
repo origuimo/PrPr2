@@ -13,6 +13,8 @@
         android:theme="@style/Theme.Regals">
         <activity android:name=".LogIn">
         </activity>
+        <activity android:name=".NewGift">
+        </activity>
         <activity android:name=".Registre">
         </activity>
         <activity android:name=".Portada"
