@@ -9,6 +9,6 @@ public class LogOut extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_out);
+        setContentView(R.layout.log_out);
     }
 }

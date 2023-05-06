@@ -2,11 +2,9 @@
     <string name="app_name">Regals</string>
 
 
-
     <string name="Titol">GIFTGIVING</string>
     <string name="LogIn">Log In</string>
     <string name="Register">Sign Up</string>
-
 
 
     <string name="Usuari">Usuari/Mail</string>
@@ -16,7 +14,7 @@
     <string name="Correu">Correu electrònic</string>
     <string name="text">Encara no tens compte?</string>
 
-    <string name="app_name">ProjecteAux</string>
+
     <string name="profile_name">Name</string>
     <string name="profile_wishlist">Wishlist</string>
     <string name="profile_prio">Prio</string>
@@ -64,4 +62,13 @@
     <string name="password_old">Old password</string>
 
     <string name="error1">El usuari i/o constrasenya no son vàlids.</string>
+
+    <string name="my_details_title">My gift details</string>
+    <string name="my_details_name">Name</string>
+    <string name="my_details_price">Price</string>
+    <string name="my_details_wishlist">Wishlist</string>
+    <string name="my_details_link">Link</string>
+    <string name="my_details_reserved">Reserved</string>
+    <string name="my_details_date">Date</string>
+
 </resources>
