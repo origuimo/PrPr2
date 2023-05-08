@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="136dp"
+        android:layout_marginEnd="152dp"
         android:text="@string/gift_user"
         app:layout_constraintEnd_toStartOf="@+id/wishlistGift"
         app:layout_constraintTop_toBottomOf="@+id/nameGift" />
@@ -29,26 +29,28 @@
         android:id="@+id/nameGift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="136dp"
+        android:layout_marginTop="44dp"
         android:text="@string/gift_name"
-        app:layout_constraintEnd_toStartOf="@+id/prioGift"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="133dp" />
 
     <TextView
         android:id="@+id/prioGift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="64dp"
         android:text="@string/gift_prio"
         app:layout_constraintEnd_toEndOf="@id/priceGift"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toEndOf="@+id/nameGift"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/priceGift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="64dp"
         android:text="@string/gift_price"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,29 +64,28 @@
         android:layout_marginEnd="64dp"
         android:text="@string/gift_link"
         app:layout_constraintEnd_toEndOf="@id/wishlistGift"
+        app:layout_constraintStart_toEndOf="@+id/userGift"
         app:layout_constraintTop_toTopOf="@id/nameGift" />
+
 
     <TextView
         android:id="@+id/dateGift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginTop="32dp"
         android:text="@string/gift_date"
-        app:layout_constraintEnd_toEndOf="@id/reservedGift"
-        app:layout_constraintTop_toTopOf="@id/userGift" />
+        app:layout_constraintEnd_toStartOf="@+id/reservedGift"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="@id/nameGift"
+        app:layout_constraintTop_toBottomOf="@id/linkGift" />
 
     <TextView
         android:id="@+id/reservedGift"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="64dp"
+        android:layout_width="69dp"
+        android:layout_height="22dp"
         android:text="@string/gift_reserved"
-        app:layout_constraintEnd_toEndOf="@id/dateGift"
-        app:layout_constraintTop_toTopOf="@id/nameGift" />
-
-
+        tools:layout_editor_absoluteX="302dp"
+        tools:layout_editor_absoluteY="129dp" />
 
     <ImageView
         android:id="@+id/imageView"
