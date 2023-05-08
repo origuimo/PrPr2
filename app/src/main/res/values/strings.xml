@@ -47,6 +47,11 @@
     <string name="gift_prio">Prio</string>
     <string name="gift_user">User</string>
     <string name="gift_wishlist">Wishlist</string>
+    <string name="gift_price">Price</string>
+    <string name="gift_date">Date</string>
+    <string name="gift_link">Link</string>
+    <string name="gift_reserved">Reserved</string>
+
 
     <string name="user_name">Name</string>
     <string name="user_email">Email</string>

@@ -22,7 +22,7 @@ public class EditGift extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), frame_layout.class); //Si apreten el boto save torna a la pantalla dels regals , o millor hauria de tornar al feed ?
+                Intent intent = new Intent(getApplicationContext(), GiftListActivity.class); //Si apreten el boto save torna a la pantalla dels regals , o millor hauria de tornar al feed ?
                 startActivity(intent);
             }
         });

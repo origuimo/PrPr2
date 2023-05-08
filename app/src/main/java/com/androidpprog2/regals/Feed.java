@@ -19,7 +19,7 @@ public class Feed extends AppCompatActivity {
         regal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), frame_layout.class); // frame_layout == llista regals ??
+                Intent intent = new Intent(getApplicationContext(), GiftListActivity.class); // frame_layout == llista regals ??
                 startActivity(intent);
             }
         });
