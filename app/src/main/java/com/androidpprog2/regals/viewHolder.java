@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONObject;
-
+/*
 public class viewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener {
     private JSONObject user;
     private EditText name;
@@ -61,5 +61,5 @@ public class viewHolder  extends RecyclerView.ViewHolder implements View.OnClick
     }
 }
 
-
+*/
 

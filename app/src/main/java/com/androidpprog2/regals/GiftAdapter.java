@@ -41,8 +41,8 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftHolder> {
     }
 
     public void updateUI() {
-        GiftListActivity giftListActivity = GiftListActivity.getInstance(activity);
-        lgifts = giftListActivity.getGifts();
+        //GiftListActivity giftListActivity = GiftListActivity.getInstance(activity);
+       // lgifts = giftListActivity.getGifts();
         notifyDataSetChanged();
     }
 }

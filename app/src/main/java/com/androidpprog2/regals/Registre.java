@@ -7,6 +7,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +32,14 @@ public class Registre extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registre);
+        EditText nomUser = findViewById(R.id.Nom);
+        String nom = nomUser.getText().toString();
+        EditText emailUser = findViewById(R.id.Mail);
+        String email = emailUser.getText().toString();
+        EditText passwordUser = findViewById(R.id.Contrasenya);
+        String password = passwordUser.getText().toString();
+        //ImageView foto = findViewById(R.id.)
+
 
 
         Button btnRegistre = findViewById(R.id.botoregister);
@@ -38,39 +48,18 @@ public class Registre extends AppCompatActivity {
             public void onClick(View v) {
 
                 Context context = v.getContext();
-                Intent intent = new Intent(context, GenerateActivity.class);
-                try {
-                    intent.putExtra("name", userObject.getString("name"));
-                    intent.putExtra("lastname", userObject.getString("lastname"));
-                    intent.putExtra("email", userObject.getString("email"));
-                    intent.putExtra("password", userObject.getString("password"));
-                    intent.putExtra("image", userObject.getString("image"));
+                makePost(nom,email,password);//pasali foto ?
 
-                } catch (Exception e) {
-                    Log.e("error", e.getMessage());
-                }
-                context.startActivity(intent);
+
             }
-
         });
 
     }
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
 
-        try {
-            Picasso.get().load(imageUrl).into(viewHolder.getImageView());
-            //D'on / com faig els gets de la resta de variables
-            viewHolder.bind(localDataSet.getJSONObject(position));
-        } catch (Exception e) {
-            Log.e("error", e.getMessage());
-        }
-
-    }
-    public void makePost() {
+    public void makePost(String nom, String email , String password) {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest sr = new StringRequest(Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api-docs/v1/#/Users/post_users", new Response.Listener<String>() {
-            @Override
+            @Override //El que vull que pasi un cop tinc ña resposta xomprovo si m'ha tornat ok o no
             public void onResponse(String response) {
                 System.out.println(response);
             }
@@ -83,15 +72,15 @@ public class Registre extends AppCompatActivity {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("username", "");
-                params.put("password", "");
-                params.put("email", "");
-                params.put("lastName", "");
-                params.put("template_id", Integer.toString(userId));
+                params.put("username", nom);
+                params.put("password", password);
+                params.put("email", email);
+               // params.put("lastName", "");
+               // params.put("template_id", Integer.toString());
                 return params;
             }
 
-            @Override
+            @Override //Al la resta ficare header d'autenticacio que agafo del log in
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("Content-Type","application/x-www-form-urlencoded");
