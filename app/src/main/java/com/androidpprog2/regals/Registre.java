@@ -32,22 +32,21 @@ public class Registre extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registre);
-        EditText nomUser = findViewById(R.id.Nom);
-        String nom = nomUser.getText().toString();
-        EditText emailUser = findViewById(R.id.Mail);
-        String email = emailUser.getText().toString();
-        EditText passwordUser = findViewById(R.id.Contrasenya);
-        String password = passwordUser.getText().toString();
-        //ImageView foto = findViewById(R.id.)
 
-
-
-        Button btnRegistre = findViewById(R.id.botoregister);
-        btnRegistre.setOnClickListener(new View.OnClickListener() {
+        Button registreButton = (Button) findViewById(R.id.botoregister);
+        registreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Context context = v.getContext();
+                setContentView(R.layout.registre);
+                EditText nomUser = findViewById(R.id.Nom);
+                String nom = nomUser.getText().toString();
+                EditText emailUser = findViewById(R.id.Mail);
+                String email = emailUser.getText().toString();
+                EditText passwordUser = findViewById(R.id.Contrasenya);
+                String password = passwordUser.getText().toString();
+                //ImageView foto = findViewById(R.id.)
                 makePost(nom,email,password);//pasali foto ?
 
 

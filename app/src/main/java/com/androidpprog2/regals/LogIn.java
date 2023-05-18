@@ -1,17 +1,31 @@
 package com.androidpprog2.regals;
 
 import android.app.AppComponentFactory;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -23,63 +37,47 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
 public class LogIn extends AppCompatActivity {
+    String token;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
         Button login = (Button) findViewById(R.id.btnLogIn);
         EditText email = (EditText) findViewById(R.id.Mail);
         EditText contra = (EditText) findViewById(R.id.Contrasenya);
+        contra.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         TextView signup = (TextView) findViewById(R.id.textsignup);
+
         login.setMovementMethod(LinkMovementMethod.getInstance());
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
+
                 String mail = email.getText().toString();
                 String contrasenya = contra.getText().toString();
                 Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$");
                 Matcher matcher = pattern.matcher(contrasenya);
-
                 if (!mail.contains("@") || !matcher.matches()) {
-                    Snackbar.make(findViewById(R.id.loginlayout), R.string.error1,
-                                    Snackbar.LENGTH_SHORT)
-                            .show();
+                    Snackbar.make(findViewById(R.id.loginlayout), R.string.error1, Snackbar.LENGTH_SHORT).show();
                 } else {
-                    
-                    /*try {
-                        URL url = new URL("https://balandrau.salle.url.edu/i3/socialgift/api/v1");
-
-                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                        connection.setRequestMethod("GET");
-                        connection.setRequestProperty("Content-Type", "application/json");
-                        connection.setConnectTimeout(10000);
-                        connection.setReadTimeout(10000);
-
-                        //connection.setRequestProperty("api_key", "YOUR_API_KEY");
-                        connection.connect();
-
-                        InputStream response = connection.getInputStream();
-                        String resposta = new BufferedReader(new InputStreamReader(response)).lines().collect(Collectors.joining());
-                        // Procesar la respuesta aquí
-
-
-                        String token = "your_access_token_here";
-
-                        // Enviar una solicitud a la API utilizando ApiRequest
-                        String apiUrl = "https://balandrau.salle.url.edu/i3/socialgift/api/v1";
-                        Map<String, String> headers = new HashMap<>();
-                        headers.put("Authorization", "Bearer " + token);
-                        ApiRequest request = new ApiRequest(apiUrl, headers, LogIn.this, LogIn.this);
-                        request.sendRequest(LogIn.this);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Couldn’t connect to the remote server.\nReverting to local data.\n");
-                    }*/
+                    postUsersLogin(mail, contrasenya);
+                    Intent intent = new Intent(LogIn.this, Feed.class);
+                    startActivity(intent);
                 }
             }
         });
+
+        findViewById(R.id.loginlayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Ocultar el teclado virtual
+                hideKeyboard();
+            }
+        });
+
         signup.setMovementMethod(LinkMovementMethod.getInstance());
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,5 +86,67 @@ public class LogIn extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        View currentFocusView = getCurrentFocus();
+        if (currentFocusView != null) {
+            imm.hideSoftInputFromWindow(currentFocusView.getWindowToken(), 0);
+        }
+    }
+
+    public void postUsersLogin(String email, String password) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest sr = new StringRequest(Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/login", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    String accessToken = jsonResponse.getString("accessToken");
+
+                    //System.out.println("Access Token: " + accessToken);
+                    Log.d("Token", "Access Token: " + accessToken); //Muestro el token para saber si la crida post se esta realizando correctamente
+                    // Interpretem token i comprovem si el user OK
+                    Intent intent = new Intent(LogIn.this, Feed.class);
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("password", password);
+                params.put("email", email);
+                return params;
+            }
+
+
+            @Override //Al la resta ficare header d'autenticacio que agafo del log in
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+
+            /*
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+
+             */
+        };
+        queue.add(sr);
     }
 }
