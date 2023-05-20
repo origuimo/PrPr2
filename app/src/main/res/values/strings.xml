@@ -13,6 +13,7 @@
     <string name="Nom">Nom</string>
     <string name="Correu">Correu electrònic</string>
     <string name="text">Encara no tens compte?</string>
+    <string name="lastname">Last name</string>
 
 
     <string name="profile_name">Name</string>
@@ -41,6 +42,7 @@
     <string name="create">Create</string>
 
     <string name="editgift_title">Edit Gift</string>
+    <string name="Feed">Feed</string>
     <string name="editgift_save">Save</string>
 
     <string name="gift_name">Name</string>

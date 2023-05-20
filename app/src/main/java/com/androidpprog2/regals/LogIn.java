@@ -104,13 +104,16 @@ public class LogIn extends AppCompatActivity {
                 System.out.println(response);
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    String accessToken = jsonResponse.getString("accessToken");
-
-                    //System.out.println("Access Token: " + accessToken);
-                    Log.d("Token", "Access Token: " + accessToken); //Muestro el token para saber si la crida post se esta realizando correctamente
-                    // Interpretem token i comprovem si el user OK
-                    Intent intent = new Intent(LogIn.this, Feed.class);
-                    startActivity(intent);
+                    if (jsonResponse.has("accessToken")) {
+                        String accessToken = jsonResponse.getString("accessToken");
+                        Intent intent = new Intent(LogIn.this, Feed.class);
+                        startActivity(intent);
+                    } else if (jsonResponse.has("error")) {
+                        JSONObject error = jsonResponse.getJSONObject("error");
+                        String errorCode = error.getString("code");
+                        String errorMessage = error.getString("message");
+                        Snackbar.make(findViewById(R.id.loginlayout), errorMessage, Snackbar.LENGTH_SHORT).show();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -119,6 +122,7 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                error.getMessage();
             }
         }) {
             @Override
@@ -137,15 +141,6 @@ public class LogIn extends AppCompatActivity {
                 return params;
             }
 
-            /*
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
-                return headers;
-            }
-
-             */
         };
         queue.add(sr);
     }

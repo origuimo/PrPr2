@@ -2,7 +2,11 @@ package com.androidpprog2.regals;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +28,9 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,23 +49,40 @@ public class Registre extends AppCompatActivity {
                 setContentView(R.layout.registre);
                 EditText nomUser = findViewById(R.id.Nom);
                 String nom = nomUser.getText().toString();
-                EditText emailUser = findViewById(R.id.Mail);
-                String email = emailUser.getText().toString();
-                EditText passwordUser = findViewById(R.id.Contrasenya);
+                EditText lastName = findViewById(R.id.Mail);
+                String nom2 = lastName.getText().toString();
+                EditText mail = findViewById(R.id.Contrasenya);
+                String email = mail.getText().toString();
+                EditText passwordUser = findViewById(R.id.Contrasenya2);
                 String password = passwordUser.getText().toString();
-                //ImageView foto = findViewById(R.id.)
-                makePost(nom,email,password);//pasali foto ?
+                ImageView foto = findViewById(R.id.profileImageView);
+                makePost(nom,nom2,email,password,foto);//pasali foto ?
 
 
             }
         });
-
     }
+    private String saveBitmapToFile(Bitmap bitmap) {
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "profile_image.jpg");
 
-    public void makePost(String nom, String email , String password) {
+        try {
+            FileOutputStream outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return file.getAbsolutePath();
+    }
+    public void makePost(String nom,String nom2, String email , String password, ImageView foto) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest sr = new StringRequest(Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api-docs/v1/#/Users/post_users", new Response.Listener<String>() {
-            @Override //El que vull que pasi un cop tinc ña resposta xomprovo si m'ha tornat ok o no
+        Bitmap bitmap = ((BitmapDrawable) foto.getDrawable()).getBitmap();
+        String imageUrl = saveBitmapToFile(bitmap);
+
+        StringRequest sr = new StringRequest(Request.Method.POST,"https://balandrau.salle.url.edu/i3/socialgift/api/v1/users", new Response.Listener<String>() {
+            @Override //El que vull que pasi un cop tinc la resposta comprovo si m'ha tornat ok o no
             public void onResponse(String response) {
                 System.out.println(response);
             }
@@ -66,16 +90,24 @@ public class Registre extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                //mira si el usuario ya existe mas printalo por pantalla?
             }
         }){
+
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("username", nom);
-                params.put("password", password);
+                params.put("name", nom);
+                params.put("lastname", nom2);
                 params.put("email", email);
-               // params.put("lastName", "");
-               // params.put("template_id", Integer.toString());
+                params.put("password", password);
+                foto.setDrawingCacheEnabled(true);
+                foto.buildDrawingCache();
+                Bitmap bitmap = foto.getDrawingCache();
+                String imageUrl = saveBitmapToFile(bitmap);
+                if (imageUrl != null) {
+                    params.put("image", imageUrl);
+                }
                 return params;
             }
 
