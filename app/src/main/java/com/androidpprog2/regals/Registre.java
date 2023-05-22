@@ -22,6 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
@@ -48,15 +49,15 @@ public class Registre extends AppCompatActivity {
                 Context context = v.getContext();
                 setContentView(R.layout.registre);
                 EditText nomUser = findViewById(R.id.Nom);
-                String nom = nomUser.getText().toString();
+                String name = nomUser.getText().toString();
                 EditText lastName = findViewById(R.id.Mail);
-                String nom2 = lastName.getText().toString();
+                String lastname = lastName.getText().toString();
                 EditText mail = findViewById(R.id.Contrasenya);
                 String email = mail.getText().toString();
                 EditText passwordUser = findViewById(R.id.Contrasenya2);
                 String password = passwordUser.getText().toString();
                 ImageView foto = findViewById(R.id.profileImageView);
-                makePost(nom,nom2,email,password,foto);//pasali foto ?
+                makePost(name,lastname,email,password,foto);//pasali foto ?
 
 
             }
@@ -76,14 +77,26 @@ public class Registre extends AppCompatActivity {
 
         return file.getAbsolutePath();
     }
-    public void makePost(String nom,String nom2, String email , String password, ImageView foto) {
-        RequestQueue queue = Volley.newRequestQueue(this);
+    public void makePost(String name,String lastname, String email , String password, ImageView foto) {
+        JSONObject   credentials = new JSONObject();
         Bitmap bitmap = ((BitmapDrawable) foto.getDrawable()).getBitmap();
         String imageUrl = saveBitmapToFile(bitmap);
 
-        StringRequest sr = new StringRequest(Request.Method.POST,"https://balandrau.salle.url.edu/i3/socialgift/api/v1/users", new Response.Listener<String>() {
-            @Override //El que vull que pasi un cop tinc la resposta comprovo si m'ha tornat ok o no
-            public void onResponse(String response) {
+        try {
+            credentials.put("name", name);
+            credentials.put("lastname", lastname);
+            credentials.put("email", email);
+            credentials.put("password",password);
+            credentials.put("image",imageUrl);
+        }catch (Exception e ){
+            Log.e("Error","Hi ha hagut un error afegint els valors al JSON object ");
+        }
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST,"https://balandrau.salle.url.edu/i3/socialgift/api/v1/users", new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
                 System.out.println(response);
             }
         }, new Response.ErrorListener() {
@@ -93,7 +106,8 @@ public class Registre extends AppCompatActivity {
                 //mira si el usuario ya existe mas printalo por pantalla?
             }
         }){
-
+            //Revisar si em fa falta aquesta funcio i com puc acabar de fer be la part de la imatge del usuari
+            /*
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
@@ -111,6 +125,8 @@ public class Registre extends AppCompatActivity {
                 return params;
             }
 
+             */
+
             @Override //Al la resta ficare header d'autenticacio que agafo del log in
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String, String>();
@@ -118,7 +134,7 @@ public class Registre extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(sr);
+        queue.add(jor);
     }
 
 }
