@@ -1,5 +1,4 @@
 package com.androidpprog2.regals;
-//No cal aquesta clase ??
 public class user {
     String name ;
     String lastName;

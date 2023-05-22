@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
@@ -56,7 +57,7 @@ public class LogIn extends AppCompatActivity {
             public void onClick(View v) {
                 hideKeyboard();
 
-                String mail = email.getText().toString();
+               String mail = email.getText().toString();
                 String contrasenya = contra.getText().toString();
                 Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$");
                 Matcher matcher = pattern.matcher(contrasenya);
@@ -97,11 +98,23 @@ public class LogIn extends AppCompatActivity {
     }
 
     public void postUsersLogin(String email, String password) {
+
+       JSONObject   credentials = new JSONObject();
+
+       try {
+           credentials.put("email", email);
+           credentials.put("password",password);
+       }catch (Exception e ){
+           Log.e("Error","Hi ha hagut un error afegint els valors al JSON object ");
+       }
+
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest sr = new StringRequest(Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/login", new Response.Listener<String>() {
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/login", credentials,
+                new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(String response) {
-                System.out.println(response);
+            public void onResponse(JSONObject response) {
+                Log.d("Response: ", response.toString());
+                /*
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     if (jsonResponse.has("accessToken")) {
@@ -117,14 +130,16 @@ public class LogIn extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                 */
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+                //error.printStackTrace();
                 error.getMessage();
             }
-        }) {
+        }){
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -134,14 +149,7 @@ public class LogIn extends AppCompatActivity {
             }
 
 
-            @Override //Al la resta ficare header d'autenticacio que agafo del log in
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/x-www-form-urlencoded");
-                return params;
-            }
-
         };
-        queue.add(sr);
+        queue.add(jor);
     }
 }

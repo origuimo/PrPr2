@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Regals">
         <activity
+            android:name=".searchUsers"
+            android:exported="false" />
+        <activity
             android:name=".llistaChatsActivity"
             android:exported="false" />
         <activity
