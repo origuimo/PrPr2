@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,7 +42,7 @@ public class Registre extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registre);
 
-        Button registreButton = (Button) findViewById(R.id.botoregister);
+        Button registreButton = findViewById(R.id.botoregister);
         registreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,12 +58,20 @@ public class Registre extends AppCompatActivity {
                 EditText passwordUser = findViewById(R.id.Contrasenya2);
                 String password = passwordUser.getText().toString();
                 ImageView foto = findViewById(R.id.profileImageView);
-                makePost(name,lastname,email,password,foto);//pasali foto ?
+                makePost(name, lastname, email, password, foto);//pasali foto ?
 
 
             }
         });
+        findViewById(R.id.registre).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Ocultar el teclado virtual
+                hideKeyboard();
+            }
+        });
     }
+
     private String saveBitmapToFile(Bitmap bitmap) {
         File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "profile_image.jpg");
 
@@ -77,64 +86,51 @@ public class Registre extends AppCompatActivity {
 
         return file.getAbsolutePath();
     }
-    public void makePost(String name,String lastname, String email , String password, ImageView foto) {
-        JSONObject   credentials = new JSONObject();
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        View currentFocusView = getCurrentFocus();
+        if (currentFocusView != null) {
+            imm.hideSoftInputFromWindow(currentFocusView.getWindowToken(), 0);
+        }
+    }
+
+    public void makePost(String name, String lastname, String email, String password, ImageView foto) {
+        JSONObject credentials = new JSONObject();
         Bitmap bitmap = ((BitmapDrawable) foto.getDrawable()).getBitmap();
         String imageUrl = saveBitmapToFile(bitmap);
 
         try {
             credentials.put("name", name);
-            credentials.put("lastname", lastname);
+            credentials.put("last_name", lastname);
             credentials.put("email", email);
-            credentials.put("password",password);
-            credentials.put("image",imageUrl);
-        }catch (Exception e ){
-            Log.e("Error","Hi ha hagut un error afegint els valors al JSON object ");
+            credentials.put("password", password);
+            credentials.put("image", imageUrl);
+        } catch (Exception e) {
+            Log.e("Error", "Hi ha hagut un error afegint els valors al JSON object ");
         }
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST,"https://balandrau.salle.url.edu/i3/socialgift/api/v1/users", new Response.Listener<JSONObject>() {
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users", credentials,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        // Manejar el error de respuesta aquí
+                    }
+                }) {
             @Override
-            public void onResponse(JSONObject response) {
-                System.out.println(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                //mira si el usuario ya existe mas printalo por pantalla?
-            }
-        }){
-            //Revisar si em fa falta aquesta funcio i com puc acabar de fer be la part de la imatge del usuari
-            /*
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("name", nom);
-                params.put("lastname", nom2);
-                params.put("email", email);
-                params.put("password", password);
-                foto.setDrawingCacheEnabled(true);
-                foto.buildDrawingCache();
-                Bitmap bitmap = foto.getDrawingCache();
-                String imageUrl = saveBitmapToFile(bitmap);
-                if (imageUrl != null) {
-                    params.put("image", imageUrl);
-                }
-                return params;
-            }
-
-             */
-
-            @Override //Al la resta ficare header d'autenticacio que agafo del log in
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/x-www-form-urlencoded");
-                return params;
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
             }
         };
-        queue.add(jor);
     }
-
 }
