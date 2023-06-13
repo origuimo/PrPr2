@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -35,8 +34,9 @@
         <activity android:name=".LogIn" />
         <activity android:name=".NewGift" />
         <activity android:name=".Registre" />
+        <activity android:name=".NewWishlist" />
         <activity
-            android:name=".Portada"
+            android:name=".Wishlist"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

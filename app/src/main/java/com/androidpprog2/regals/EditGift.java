@@ -93,7 +93,7 @@ public class EditGift extends AppCompatActivity {
 
         int idProducto = Integer.parseInt(Id);
 
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/products/" + idProducto;
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/" + idProducto;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, updatedData,
                 new Response.Listener<JSONObject>() {

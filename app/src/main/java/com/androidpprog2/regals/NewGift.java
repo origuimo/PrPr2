@@ -78,7 +78,7 @@ public class NewGift extends AppCompatActivity {
             Log.e("Error", "Hi ha hagut un error afegint els valors al JSON object ");
         }
 
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/products";
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, credentials,
                 new Response.Listener<JSONObject>() {
                     @Override
