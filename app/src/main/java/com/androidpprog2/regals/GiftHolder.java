@@ -54,7 +54,7 @@ public class GiftHolder extends RecyclerView.ViewHolder implements View.OnClickL
         //itemView.setOnClickListener(this);
     }
 
-
+/*
     public GiftHolder(LayoutInflater inflater, ViewGroup parent, Activity activity) {
         super(inflater.inflate(R.layout.gift_object, parent, false));
         tvName = (TextView) itemView.findViewById(R.id.nameGift);
@@ -67,13 +67,14 @@ public class GiftHolder extends RecyclerView.ViewHolder implements View.OnClickL
         tvReserved = (TextView) itemView.findViewById(R.id.reservedGift);
         ivFoto = (ImageView) itemView.findViewById(R.id.imageView);
         this.activity = activity;
-        gift = new Gift();
+       // gift = new Gift();
         activity = activity;
         itemView.setOnClickListener(this);
     }
-
+*/
     public void bind(Gift gift) {
         this.gift = gift;
+        /*
         tvName.setText(gift.getName());
         tvPrice.setText((int) gift.getPrice()); // no tinc clar lo de que sigui int ??
         tvLink.setText(gift.getLink());
@@ -86,16 +87,18 @@ public class GiftHolder extends RecyclerView.ViewHolder implements View.OnClickL
         //ivCapturat.setVisibility(pokemon.isCapturat() ? View.VISIBLE :
                 //View.GONE);
        // ivFoto.setFoto(gift.ivFoto());
+    */
     }
+
     @Override
     public void onClick(View view) {
 
-        UUID regalID = gift.getId();
+        //UUID regalID = gift.getId();
         //Mirar be com poder pasar aixo a fragemnt, potser podem reutilitzar lo de la llista per fer-ho amb usuari i la resta de coses que calgui
         //Mirar si es necesari fer fragemnt o no cal, asegura't !
         //GiftListActivity fragment = new GiftListActivity();
         Bundle args = new Bundle();
-        args.putSerializable("ARGUMENT_OBJECT_ID", regalID);
+        //args.putSerializable("ARGUMENT_OBJECT_ID", regalID);
         //fragment.setArguments(args);
         FragmentManager fm = null;
         if (activity instanceof FragmentActivity) {

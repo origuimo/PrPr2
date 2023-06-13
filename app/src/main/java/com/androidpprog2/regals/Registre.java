@@ -1,10 +1,13 @@
 package com.androidpprog2.regals;
 
+import static com.androidpprog2.regals.EditGift.PICK_IMAGE_REQUEST;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -42,13 +45,20 @@ public class Registre extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registre);
 
+        ImageView foto = findViewById(R.id.profileImageView);
+        foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+            }
+        });
+
         Button registreButton = findViewById(R.id.botoregister);
         registreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Context context = v.getContext();
-                setContentView(R.layout.registre);
                 EditText nomUser = findViewById(R.id.Nom);
                 String name = nomUser.getText().toString();
                 EditText lastName = findViewById(R.id.Mail);
@@ -59,10 +69,11 @@ public class Registre extends AppCompatActivity {
                 String password = passwordUser.getText().toString();
                 ImageView foto = findViewById(R.id.profileImageView);
                 makePost(name, lastname, email, password, foto);//pasali foto ?
-
-
+                Intent intent = new Intent(Registre.this, Feed.class);
+                startActivity(intent);
             }
         });
+
         findViewById(R.id.registre).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +81,18 @@ public class Registre extends AppCompatActivity {
                 hideKeyboard();
             }
         });
+    }
+
+    private static final int PICK_IMAGE_REQUEST = 1;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            ImageView foto = findViewById(R.id.profileImageView);
+            Picasso.get().load(imageUri).into(foto);
+        }
     }
 
     private String saveBitmapToFile(Bitmap bitmap) {
@@ -86,6 +109,7 @@ public class Registre extends AppCompatActivity {
 
         return file.getAbsolutePath();
     }
+
     private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         View currentFocusView = getCurrentFocus();
@@ -132,5 +156,7 @@ public class Registre extends AppCompatActivity {
                 return headers;
             }
         };
+
+        queue.add(jor); // Agrega la solicitud a la cola de solicitudes
     }
 }

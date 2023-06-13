@@ -114,29 +114,11 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("Response: ", response.toString());
-                /*
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    if (jsonResponse.has("accessToken")) {
-                        String accessToken = jsonResponse.getString("accessToken");
-                        Intent intent = new Intent(LogIn.this, Feed.class);
-                        startActivity(intent);
-                    } else if (jsonResponse.has("error")) {
-                        JSONObject error = jsonResponse.getJSONObject("error");
-                        String errorCode = error.getString("code");
-                        String errorMessage = error.getString("message");
-                        Snackbar.make(findViewById(R.id.loginlayout), errorMessage, Snackbar.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                 */
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //error.printStackTrace();
                 error.getMessage();
             }
         }){
@@ -147,8 +129,6 @@ public class LogIn extends AppCompatActivity {
                 params.put("email", email);
                 return params;
             }
-
-
         };
         queue.add(jor);
     }

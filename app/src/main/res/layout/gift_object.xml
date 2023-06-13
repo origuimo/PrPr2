@@ -9,83 +9,42 @@
         android:id="@+id/wishlistGift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="48dp"
         android:text="@string/gift_wishlist"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prioGift" />
+        app:layout_constraintTop_toBottomOf="@+id/booked" />
 
     <TextView
-        android:id="@+id/userGift"
+        android:id="@+id/priority"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="152dp"
-        android:text="@string/gift_user"
+        android:text="priority"
         app:layout_constraintEnd_toStartOf="@+id/wishlistGift"
-        app:layout_constraintTop_toBottomOf="@+id/nameGift" />
+        app:layout_constraintTop_toBottomOf="@+id/url" />
 
     <TextView
-        android:id="@+id/nameGift"
+        android:id="@+id/url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="@string/gift_name"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="133dp" />
-
-    <TextView
-        android:id="@+id/prioGift"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="64dp"
-        android:text="@string/gift_prio"
-        app:layout_constraintEnd_toEndOf="@id/priceGift"
-        app:layout_constraintHorizontal_bias="0.545"
-        app:layout_constraintStart_toEndOf="@+id/nameGift"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="144dp"
+        android:text="Url"
+        app:layout_constraintEnd_toStartOf="@+id/booked"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/priceGift"
+        android:id="@+id/booked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="64dp"
-        android:text="@string/gift_price"
+        android:text="Booked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/linkGift"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="64dp"
-        android:text="@string/gift_link"
-        app:layout_constraintEnd_toEndOf="@id/wishlistGift"
-        app:layout_constraintStart_toEndOf="@+id/userGift"
-        app:layout_constraintTop_toTopOf="@id/nameGift" />
-
-
-    <TextView
-        android:id="@+id/dateGift"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/gift_date"
-        app:layout_constraintEnd_toStartOf="@+id/reservedGift"
-        app:layout_constraintHorizontal_bias="0.066"
-        app:layout_constraintStart_toStartOf="@id/nameGift"
-        app:layout_constraintTop_toBottomOf="@id/linkGift" />
-
-    <TextView
-        android:id="@+id/reservedGift"
-        android:layout_width="69dp"
-        android:layout_height="22dp"
-        android:text="@string/gift_reserved"
-        tools:layout_editor_absoluteX="302dp"
-        tools:layout_editor_absoluteY="129dp" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -93,10 +52,10 @@
         android:layout_height="65dp"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/nameGift"
+        app:layout_constraintEnd_toStartOf="@+id/url"
         app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.533"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/regal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

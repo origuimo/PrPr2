@@ -1,48 +1,61 @@
 package com.androidpprog2.regals;
-
-import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.util.List;
 
-public class GiftAdapter extends RecyclerView.Adapter<GiftHolder> {
-    private List<Gift> lgifts;
-    private Activity activity;
+public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GiftViewHolder> {
+    private Context context;
+    private List<Gift> giftList;
 
-    public GiftAdapter(List<Gift> lgifts, Activity activity) {
-        this.lgifts = lgifts;
-        this.activity = activity;
+    public GiftAdapter(Context context, List<Gift> giftList) {
+        this.context = context;
+        this.giftList = giftList;
+    }
+
+    @NonNull
+    @Override
+    public GiftViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.gift_object, parent, false);
+        return new GiftViewHolder(view);
     }
 
     @Override
-    public GiftHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(activity);
-        View view = layoutInflater.inflate(R.layout.gift_list, parent, false);
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = (int) (parent.getHeight() * 0.2);
-        view.setLayoutParams(layoutParams);
-        return new GiftHolder(layoutInflater, parent, activity);
-    }
+    public void onBindViewHolder(@NonNull GiftViewHolder holder, int position) {
+        Gift gift = giftList.get(position);
 
-    @Override
-    public void onBindViewHolder(GiftHolder holder, int position) {
-        Gift gift = lgifts.get(position);
-        holder.bind(gift);
+        holder.idTextView.setText(String.valueOf(gift.getId()));
+        holder.wishlistIdTextView.setText(String.valueOf(gift.getWishlistId()));
+        holder.productUrlTextView.setText(gift.getProductUrl());
+        holder.priorityTextView.setText(String.valueOf(gift.getPriority()));
+        holder.bookedTextView.setText(String.valueOf(gift.isBooked()));
     }
 
     @Override
     public int getItemCount() {
-        return lgifts.size();
+        return giftList.size();
     }
 
-    public void updateUI() {
-        //GiftListActivity giftListActivity = GiftListActivity.getInstance(activity);
-       // lgifts = giftListActivity.getGifts();
-        notifyDataSetChanged();
+    public static class GiftViewHolder extends RecyclerView.ViewHolder {
+        TextView idTextView;
+        TextView wishlistIdTextView;
+        TextView productUrlTextView;
+        TextView priorityTextView;
+        TextView bookedTextView;
+
+        public GiftViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            wishlistIdTextView = itemView.findViewById(R.id.wishlistGift);
+            productUrlTextView = itemView.findViewById(R.id.url);
+            priorityTextView = itemView.findViewById(R.id.priority);
+            bookedTextView = itemView.findViewById(R.id.booked);
+        }
     }
 }
