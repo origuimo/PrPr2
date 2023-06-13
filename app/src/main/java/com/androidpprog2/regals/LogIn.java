@@ -57,7 +57,7 @@ public class LogIn extends AppCompatActivity {
             public void onClick(View v) {
                 hideKeyboard();
 
-               String mail = email.getText().toString();
+                String mail = email.getText().toString();
                 String contrasenya = contra.getText().toString();
                 Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$");
                 Matcher matcher = pattern.matcher(contrasenya);
@@ -99,7 +99,7 @@ public class LogIn extends AppCompatActivity {
 
     public void postUsersLogin(String email, String password) {
 
-       JSONObject   credentials = new JSONObject();
+       JSONObject  credentials = new JSONObject();
 
        try {
            credentials.put("email", email);
