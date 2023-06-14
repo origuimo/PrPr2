@@ -48,7 +48,7 @@ public class Feed extends AppCompatActivity {
         regal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), GiftListActivity.class); // frame_layout == llista regals ??
+                Intent intent = new Intent(getApplicationContext(), Wishlist.class);
                 startActivity(intent);
             }
         });
@@ -57,7 +57,7 @@ public class Feed extends AppCompatActivity {
         persones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EditProfile.class); //S'ha de canviar a la pantalla d'amics quan l'haguem creat
+                Intent intent = new Intent(getApplicationContext(), chat.class); //S'ha de canviar a la pantalla d'amics quan l'haguem creat
                 startActivity(intent);
             }
         });
@@ -70,17 +70,15 @@ public class Feed extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*
-        ImageButton persones = findViewById(R.id.persones);
-        persones.setOnClickListener(new View.OnClickListener() {
+
+        ImageButton home = findViewById(R.id.casa);
+        home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EditProfile.class); //S'ha de canviar a la pantalla d'amics quan l'haguem creat
+                Intent intent = new Intent(getApplicationContext(), Profile.class); //S'ha de canviar a la pantalla d'amics quan l'haguem creat
                 startActivity(intent);
             }
         });
-
- */
 
         giftList = new ArrayList<>();
         giftAdapter = new GiftAdapter(this,giftList);
@@ -90,30 +88,46 @@ public class Feed extends AppCompatActivity {
     }
     public void makeRequest() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts", null,
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("gifts");
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject giftJson = jsonArray.getJSONObject(i);
-                                int id = giftJson.getInt("id");
-                                int wishlistId = giftJson.getInt("wishlist_id");
-                                String productUrl = giftJson.getString("product_url");
-                                int priority = giftJson.getInt("priority");
-                                boolean booked = giftJson.getBoolean("booked");
+                        // Verificar el código de respuesta antes de procesar la respuesta
+                        int statusCode = response.optInt("code", -1); // Obtener el código de respuesta desde la respuesta JSON
 
-                                Gift gift = new Gift(id, wishlistId, productUrl, priority, booked);
-                                giftList.add(gift);
-                            }
+                        switch (statusCode) {
+                            case 200:
+                                try {
+                                    JSONArray jsonArray = response.getJSONArray("gifts");
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject giftJson = jsonArray.getJSONObject(i);
+                                        int id = giftJson.getInt("id");
+                                        int wishlistId = giftJson.getInt("wishlist_id");
+                                        String productUrl = giftJson.getString("product_url");
+                                        int priority = giftJson.getInt("priority");
+                                        boolean booked = giftJson.getBoolean("booked");
+                                        Gift gift = new Gift(id, wishlistId, productUrl, priority, booked);
+                                        giftList.add(gift);
+                                    }
 
-                            giftAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                                    giftAdapter.notifyDataSetChanged();
+
+                                } catch (JSONException e) {
+                                    Log.e("Error", "Error al procesar la respuesta JSON");
+                                }
+                                break;
+                            case 401:
+                                Log.e("Error", "Usuari no autoritzat");
+                                break;
+                            case 500:
+                                Log.e("Error", "Error getting list of all users");
+                                break;
                         }
                     }
-                },
+            },
+
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -121,7 +135,7 @@ public class Feed extends AppCompatActivity {
                     }
                 });
 
-        queue.add(jor);
+        queue.add(request);
     }
 
 }

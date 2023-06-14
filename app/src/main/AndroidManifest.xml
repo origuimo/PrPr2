@@ -23,9 +23,6 @@
             android:name=".chat"
             android:exported="false" />
         <activity
-            android:name=".GiftListActivity"
-            android:exported="false" />
-        <activity
             android:name=".Feed"
             android:exported="false" />
         <activity

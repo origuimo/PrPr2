@@ -50,7 +50,7 @@ public class EditGift extends AppCompatActivity {
 
                 putGift(noms, descripcion, enllaç, preu, categoria, Id);
 
-                Intent intent = new Intent(getApplicationContext(), GiftListActivity.class); //Si apreten el boto save torna a la pantalla dels regals , o millor hauria de tornar al feed ?
+                Intent intent = new Intent(getApplicationContext(), Wishlist.class); //Si apreten el boto save torna a la pantalla dels regals , o millor hauria de tornar al feed ?
                 startActivity(intent);
             }
         });
