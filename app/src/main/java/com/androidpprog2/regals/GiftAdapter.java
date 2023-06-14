@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GiftViewHolder> {
+public class GiftAdapter extends RecyclerView.Adapter<GiftHolder>  {
     private Context context;
     private List<Gift> giftList;
 
@@ -21,13 +21,13 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GiftViewHolder
 
     @NonNull
     @Override
-    public GiftViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GiftHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.gift_object, parent, false);
-        return new GiftViewHolder(view);
+        return new GiftHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GiftViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GiftHolder holder, int position) {
         Gift gift = giftList.get(position);
 
         holder.idTextView.setText(String.valueOf(gift.getId()));
@@ -40,22 +40,5 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GiftViewHolder
     @Override
     public int getItemCount() {
         return giftList.size();
-    }
-
-    public static class GiftViewHolder extends RecyclerView.ViewHolder {
-        TextView idTextView;
-        TextView wishlistIdTextView;
-        TextView productUrlTextView;
-        TextView priorityTextView;
-        TextView bookedTextView;
-
-        public GiftViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            wishlistIdTextView = itemView.findViewById(R.id.wishlistGift);
-            productUrlTextView = itemView.findViewById(R.id.url);
-            priorityTextView = itemView.findViewById(R.id.priority);
-            bookedTextView = itemView.findViewById(R.id.booked);
-        }
     }
 }
