@@ -39,7 +39,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 public class LogIn extends AppCompatActivity {
-    String token;
+    static String token;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +113,11 @@ public class LogIn extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                try {
+                    token = response.getString("acessToken");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
                 Log.d("Response: ", response.toString());
 
             }
@@ -131,5 +136,9 @@ public class LogIn extends AppCompatActivity {
             }
         };
         queue.add(jor);
+    }
+
+    public static String getToken(){
+        return token;
     }
 }
