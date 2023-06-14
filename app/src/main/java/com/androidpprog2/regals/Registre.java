@@ -72,7 +72,7 @@ public class Registre extends AppCompatActivity {
                 String password = passwordUser.getText().toString();
                 ImageView foto = findViewById(R.id.profileImageView);
                 makePost(name, lastname, email, password, foto);//pasali foto ?
-                Intent intent = new Intent(Registre.this, Feed.class);
+                Intent intent = new Intent(Registre.this, LogIn.class);
                 startActivity(intent);
             }
         });
