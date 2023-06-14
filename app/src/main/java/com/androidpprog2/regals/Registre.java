@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +32,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -123,15 +126,6 @@ public class Registre extends AppCompatActivity {
         Bitmap bitmap = ((BitmapDrawable) foto.getDrawable()).getBitmap();
         String imageUrl = saveBitmapToFile(bitmap);
 
-        try {
-            credentials.put("name", name);
-            credentials.put("last_name", lastname);
-            credentials.put("email", email);
-            credentials.put("password", password);
-            credentials.put("image", imageUrl);
-        } catch (Exception e) {
-            Log.e("Error", "Hi ha hagut un error afegint els valors al JSON object ");
-        }
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -140,6 +134,41 @@ public class Registre extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         System.out.println(response);
+                        int statusCode = response.optInt("code", -1); // Obtener el código de respuesta desde la respuesta JSON
+                        switch (statusCode) {
+                            case 200:
+                                try {
+                                    credentials.put("name", name);
+                                    credentials.put("last_name", lastname);
+                                    credentials.put("email", email);
+                                    credentials.put("password", password);
+                                    credentials.put("image", imageUrl);
+                                } catch (Exception e) {
+                                    Log.e("Error", "Hi ha hagut un error afegint els valors al JSON object ");
+                                }
+                                break;
+                            case 400:
+                                Log.e("Error", "Request incorrecta");
+                                String message = "No es pot crear aquest usuari";
+                                Toast.makeText(Registre.this, message, Toast.LENGTH_SHORT).show();
+                                break;
+                            case 406:
+                                Log.e("Error", "Missing Parameters");
+                                String message2 = "Omple tots els camps!";
+                                Toast.makeText(Registre.this, message2, Toast.LENGTH_SHORT).show();
+                                break;
+                            case 409:
+                                Log.e("Error", "Mail ja esta registrat");
+                                String message3 = "Aquesta adreça de correu electronica ja està registrada!!";
+                                Toast.makeText(Registre.this, message3, Toast.LENGTH_SHORT).show();
+                                break;
+                            case 500:
+                                Log.e("Error", "No s'ha pogut crear l'usuari!");
+                                break;
+                            case 502:
+                                Log.e("Error", "Internet server error!");
+                                break;
+                        }
                     }
                 },
                 new Response.ErrorListener() {
