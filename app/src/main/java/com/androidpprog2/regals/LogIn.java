@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -113,14 +115,34 @@ public class LogIn extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try {
-                    token = response.getString("acessToken");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                Log.d("Response: ", response.toString());
+                int statusCode = response.optInt("code", -1); // Obtener el código de respuesta desde la respuesta JSON
 
+                switch (statusCode) {
+                    case 200:
+                        try {
+                            token = response.getString("acessToken");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        break;
+                    case 400:
+                        Log.e("Error", "Error al intentar accedir");
+                        break;
+
+                    case 401:
+                        Log.e("Error", "Usuari incorrecte");
+                        String message = "Aquest usuari no existeix";
+                        Toast.makeText(LogIn.this, message, Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case 406:
+                        Log.e("Error", "Missing Parameter");
+                        String message2 = "Usuari incomplert! Falta algun parametre";
+                        Toast.makeText(LogIn.this, message2, Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
